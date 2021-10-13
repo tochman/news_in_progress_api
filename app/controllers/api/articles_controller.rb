@@ -4,7 +4,7 @@ class Api::ArticlesController < ApplicationController
     if articles.any?
       render json: { articles: articles }
     else
-      render json: { message: 'There are no articles' }
+      render json: { message: 'There are no articles in the database' }
     end
   end
 end
