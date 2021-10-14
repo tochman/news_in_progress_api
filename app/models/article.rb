@@ -1,3 +1,3 @@
 class Article < ApplicationRecord
-  validates_presence_of :title, :lede, :body
+  validates_presence_of :title, :lede
 end
