@@ -11,6 +11,10 @@ RSpec.describe 'GET /api/articles', type: :request do
     it 'is expected to return a collection of articles' do
       expect(response_json['articles'].count).to eq 2
     end
+
+    it 'is expected to include a category value' do
+      expect(response_json['articles'].first['category']).to eq 'MyCategory'
+    end
   end
 
   describe 'when there are no articles in the database' do
