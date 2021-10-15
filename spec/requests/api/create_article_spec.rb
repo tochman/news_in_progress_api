@@ -40,7 +40,7 @@ RSpec.describe 'POST /api/articles', type: :request do
 
       it { is_expected.to have_http_status 422 }
 
-      it 'is expected to to ask for a lede when the lede is missing' do
+      it 'is expected to ask for a lede when the lede is missing' do
         expect(response_json['errors']).to eq(
           "Lede can't be blank"
         )

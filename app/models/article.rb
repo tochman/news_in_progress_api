@@ -1,4 +1,3 @@
 class Article < ApplicationRecord
-  validates :title, presence: true
-  validates :lede, presence: true
+  validates_presence_of :title, :lede
 end
