@@ -30,9 +30,7 @@ describe 'GET api/articles/:id', type: :request do
     it { is_expected.to have_http_status 422 }
 
     it 'is expected to return an error message' do
-      expect(response_json['errors']).to eq "Couldn't find Article with 'id'=999"
+      expect(response_json['errors']).to eq 'Your request could not be processed.'
     end
-    
   end
-  
 end
