@@ -1,6 +1,6 @@
 RSpec.describe 'POST /api/articles', type: :request do
   subject { response }
-  describe 'when the article is successfully created' do
+  describe 'successful, when the article is created' do
     before do
       post '/api/articles',
            params: { title: 'Amazing title',
@@ -9,15 +9,15 @@ RSpec.describe 'POST /api/articles', type: :request do
 
     it { is_expected.to have_http_status 201 }
 
-    it 'is expected to return a response message when an article is created' do
+    it 'is expected to return a response message' do
       expect(response_json['message']).to eq(
         'You have successfully added Amazing title to the site'
       )
     end
   end
 
-  describe 'when the article is missing' do
-    describe 'the title' do
+  describe 'unsuccessful, when the article is not created' do
+    describe 'because the title is missing' do
       before do
         post '/api/articles',
              params: { lede: "I'm missing a title" }
@@ -32,7 +32,7 @@ RSpec.describe 'POST /api/articles', type: :request do
       end
     end
 
-    describe 'the lede' do
+    describe 'because the lede is missing' do
       before do
         post '/api/articles',
              params: { title: 'I forgot the lede' }
