@@ -21,6 +21,8 @@ class Api::ArticlesController < ApplicationController
   def show
     article = Article.find(params[:id])
     render json: { article: article }
+  rescue StandardError => e
+    render json: { errors: e.message }, status: 422
   end
 
   private
