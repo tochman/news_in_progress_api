@@ -9,13 +9,23 @@ class Api::ArticlesController < ApplicationController
   end
 
   def create
-    article = Article.create(title: params[:title],
-                             lede: params[:lede])
+    article = Article.create(article_params)
 
     if article.valid?
       render json: { message: "You have successfully added #{article.title} to the site" }, status: 201
     else
       render json: { errors: article.errors.full_messages.to_sentence }, status: 422
     end
+  end
+
+  def show
+    article = Article.find(params[:id])
+    render json: { article: article }
+  end
+
+  private
+
+  def article_params
+    params.require(:article).permit(:title, :lede, :body)
   end
 end
