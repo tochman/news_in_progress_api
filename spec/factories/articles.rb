@@ -3,6 +3,6 @@ FactoryBot.define do
     title { 'MyTitle' }
     lede { 'MyLede' }
     body { 'MyBody' }
-    category { 'MyCategory' }
+    category_id { 2 }
   end
 end

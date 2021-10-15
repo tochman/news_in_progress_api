@@ -3,14 +3,14 @@ RSpec.describe Article, type: :model do
     it { is_expected.to have_db_column :title }
     it { is_expected.to have_db_column :lede }
     it { is_expected.to have_db_column :body }
-    it { is_expected.to have_db_column :category}
+    it { is_expected.to have_db_column :category_id}
   end
 
   describe 'Validations' do
     it { is_expected.to validate_presence_of :title }
     it { is_expected.to validate_presence_of :lede }
     it { is_expected.to validate_presence_of :body }
-    it { is_expected.to validate_presence_of :category }
+    it { is_expected.to validate_presence_of :category_id }
   end
 
   describe 'Factory' do
