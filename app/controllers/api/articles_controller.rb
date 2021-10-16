@@ -1,6 +1,10 @@
 class Api::ArticlesController < ApplicationController
   def index
-    articles = Article.all
+    articles = if params[:category_name]
+                 Article.where(category_name: params[:category_name])
+               else
+                 Article.all
+               end
     if articles.any?
       render json: { articles: articles }
     else
