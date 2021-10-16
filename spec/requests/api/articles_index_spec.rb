@@ -2,9 +2,9 @@ RSpec.describe 'GET /api/articles', type: :request do
   subject { response }
 
   describe 'when there are some article in the database' do
-    let(:tech) { create(:category, name: 'Tech') }
-    let!(:article1) { create(:article, category_id: tech.id, category_name: tech.name) }
-    let!(:article2) { create(:article, category_id: tech.id, category_name: tech.name) }
+    let(:category) { create(:category, name: 'Tech') }
+    let!(:article1) { create(:article, category_id: category.id, category_name: category.name) }
+    let!(:article2) { create(:article, category_id: category.id, category_name: category.name) }
     let!(:article3) { create(:article) }
 
     describe 'searching for all articles' do
@@ -25,7 +25,7 @@ RSpec.describe 'GET /api/articles', type: :request do
     describe 'search for articles by categories' do
       before do
         get '/api/articles/',
-            params: { category_name: tech.name }
+            params: { category_name: category.name }
       end
       it { is_expected.to have_http_status 200 }
 
