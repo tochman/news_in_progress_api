@@ -33,6 +33,17 @@ RSpec.describe 'GET /api/articles', type: :request do
         expect(response_json['articles'].count).to eq 2
       end
     end
+
+    describe 'when the category params dont exist' do
+      before do
+        get '/api/articles/',
+            params: { category_name: 'Sports' }
+      end
+
+      it 'is expected to return a collection of articles' do
+        expect(response_json['articles'].count).to eq 3
+      end
+    end
   end
 
   describe 'when there are no articles in the database' do
