@@ -1,7 +1,6 @@
 class Api::ArticlesController < ApplicationController
   def index
     articles = Article.all
-    # .includes(:category).where("category.id = ''")
     if articles.any?
       render json: { articles: articles }
     else
@@ -27,6 +26,6 @@ class Api::ArticlesController < ApplicationController
   private
 
   def article_params
-    params.require(:article).permit(:title, :lede, :body, :category)
+    params.require(:article).permit(:title, :lede, :body, :category_name, :category_id)
   end
 end

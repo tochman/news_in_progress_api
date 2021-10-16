@@ -3,8 +3,8 @@ RSpec.describe 'GET /api/articles', type: :request do
 
   describe 'when there are some article in the database' do
     let(:category) { create(:category) }
-    let!(:article1) { create(:article, category_id: category.id) }
-    let!(:article2) { create(:article, category_id: category.id) }
+    let!(:article1) { create(:article, category_id: category.id, category_name: category.name) }
+    let!(:article2) { create(:article, category_id: category.id, category_name: category.name) }
 
     before do
       get '/api/articles'
@@ -16,8 +16,7 @@ RSpec.describe 'GET /api/articles', type: :request do
     end
 
     it 'is expected to include a category value' do
-      binding.pry
-      expect(response_json['articles'].first.category).to eq 'MyCategory'
+      expect(response_json['articles'].last['category_name']).to eq 'MyCategory'
     end
   end
 
