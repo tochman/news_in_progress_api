@@ -1,6 +1,7 @@
 class Api::ArticlesController < ApplicationController
   def index
     articles = Article.all
+    # .includes(:category).where("category.id = ''")
     if articles.any?
       render json: { articles: articles }
     else
