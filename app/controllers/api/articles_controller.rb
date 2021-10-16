@@ -11,7 +11,8 @@ class Api::ArticlesController < ApplicationController
   
   def create
     article = Article.create(article_params)
-    
+    article.category_id = set_category_id(article)
+
     if article.valid?
       render json: { message: "You have successfully added #{article.title} to the site" }, status: 201
     else
@@ -36,5 +37,11 @@ class Api::ArticlesController < ApplicationController
 
   def article_params
     params.require(:article).permit(:title, :lede, :body, :category_name, :category_id)
+  end
+
+  def set_category_id(article)
+    category_name_from_article = article.category_name
+    category_class_instance_from_categories = Category.find_by(name: category_name_from_article)
+    category_class_instance_from_categories ? category_class_instance_from_categories.id : nil
   end
 end

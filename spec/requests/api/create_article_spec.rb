@@ -7,7 +7,6 @@ RSpec.describe 'POST /api/articles', type: :request do
            params: { article: { title: 'Amazing title',
                                 lede: 'Amazing lede...',
                                 body: 'Amazing body',
-                                category_id: category.id,
                                 category_name: category.name } }
     end
 
@@ -26,7 +25,6 @@ RSpec.describe 'POST /api/articles', type: :request do
         post '/api/articles',
              params: { article: { lede: "I'm missing a title",
                                   body: "I'm missing a title",
-                                  category_id: category.id,
                                   category_name: category.name } }
       end
 
@@ -44,7 +42,6 @@ RSpec.describe 'POST /api/articles', type: :request do
         post '/api/articles',
              params: { article: { title: 'I forgot the lede',
                                   body: 'I forgot the lede',
-                                  category_id: category.id,
                                   category_name: category.name } }
       end
 
@@ -62,7 +59,6 @@ RSpec.describe 'POST /api/articles', type: :request do
         post '/api/articles',
              params: { article: { title: 'I forgot the body',
                                   lede: 'I forgot the body',
-                                  category_id: category.id,
                                   category_name: category.name } }
       end
 
@@ -78,14 +74,13 @@ RSpec.describe 'POST /api/articles', type: :request do
         post '/api/articles',
              params: { article: { title: 'I forgot the category',
                                   lede: 'I forgot the category',
-                                  body: 'I forgot the category',
-                                  category_name: category.name } }
+                                  body: 'I forgot the category' } }
       end
 
       it { is_expected.to have_http_status 422 }
 
-      it 'is expected to as for the category when the category is missing' do
-        expect(response_json['errors']).to eq("Category can't be blank and Category must exist")
+      it 'is expected to return an error when the category is missing' do
+        expect(response_json['errors']).to eq("Category name can't be blank and Category must exist")
       end
     end
   end
