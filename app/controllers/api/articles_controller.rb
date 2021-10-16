@@ -1,10 +1,7 @@
 class Api::ArticlesController < ApplicationController
   def index
-    articles = if params[:category_name]
-                 Article.where(category_name: params[:category_name])
-               else
-                 Article.all
-               end
+    articles = category_param_check(params[:category_name])
+
     if articles.any?
       render json: { articles: articles }
     else
@@ -28,6 +25,14 @@ class Api::ArticlesController < ApplicationController
   end
 
   private
+
+  def category_param_check(category_name)
+    if category_name
+      Article.where(category_name: params[:category_name])
+    else
+      Article.all
+    end
+  end
 
   def article_params
     params.require(:article).permit(:title, :lede, :body, :category_name, :category_id)
