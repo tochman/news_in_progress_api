@@ -12,6 +12,7 @@ RSpec.describe Article, type: :model do
     it { is_expected.to validate_presence_of :lede }
     it { is_expected.to validate_presence_of :body }
     it { is_expected.to validate_presence_of :category_id }
+    it { is_expected.to validate_presence_of :category_name }
   end
 
   describe 'Factory' do
