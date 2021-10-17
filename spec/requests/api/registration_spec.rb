@@ -23,7 +23,7 @@ RSpec.describe 'POST /api/auth/' do
     end
 
     it 'is expected to have the following user name' do
-  expect(User.all.first.name).to eq 'foobar'
+      expect(User.all.first.name).to eq 'foobar'
     end
   end
 
