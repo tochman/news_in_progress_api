@@ -8,12 +8,12 @@ class Api::ArticlesController < ApplicationController
       render json: { message: 'There are no articles in the database' }, status: 404
     end
   end
-  
+
   def create
     article = Article.create(article_params)
-    article.category_id = Category.find_by(name: article.category_name) ?
-       Category.find_by(name: article.category_name).id :
-       nil
+    article.category_id = if Category.find_by(name: article.category_name)
+                            Category.find_by(name: article.category_name).id
+                          end
 
     if article.valid?
       render json: { message: "You have successfully added #{article.title} to the site" }, status: 201
@@ -21,14 +21,14 @@ class Api::ArticlesController < ApplicationController
       render json: { errors: article.errors.full_messages.to_sentence }, status: 422
     end
   end
-  
+
   def show
     article = Article.find(params[:id])
     render json: { article: article }
   end
-  
+
   private
-  
+
   def to_get_articles(category_name)
     if Category.pluck(:name).include? category_name
       Article.where(category_name: params[:category_name])
@@ -40,5 +40,4 @@ class Api::ArticlesController < ApplicationController
   def article_params
     params.require(:article).permit(:title, :lede, :body, :category_name)
   end
-
 end
