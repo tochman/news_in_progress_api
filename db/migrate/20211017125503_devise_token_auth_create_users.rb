@@ -13,6 +13,7 @@ class DeviseTokenAuthCreateUsers < ActiveRecord::Migration[6.1]
       t.datetime :confirmation_sent_at
       t.string   :unconfirmed_email
       t.string :email
+      t.string :name
       t.json :tokens
       t.timestamps
       t.integer :sign_in_count, default: 0
