@@ -1,6 +1,6 @@
 class Api::ArticlesController < ApplicationController
   def index
-    articles = category_param_check(params[:category_name])
+    articles = to_get_articles(params[:category_name])
 
     if articles.any?
       render json: { articles: articles }
@@ -11,7 +11,9 @@ class Api::ArticlesController < ApplicationController
   
   def create
     article = Article.create(article_params)
-    article.category_id = set_category_id(article)
+    article.category_id = Category.find_by(name: article.category_name) ?
+       Category.find_by(name: article.category_name).id :
+       nil
 
     if article.valid?
       render json: { message: "You have successfully added #{article.title} to the site" }, status: 201
@@ -27,7 +29,7 @@ class Api::ArticlesController < ApplicationController
   
   private
   
-  def category_param_check(category_name)
+  def to_get_articles(category_name)
     if Category.pluck(:name).include? category_name
       Article.where(category_name: params[:category_name])
     else
@@ -36,12 +38,7 @@ class Api::ArticlesController < ApplicationController
   end
 
   def article_params
-    params.require(:article).permit(:title, :lede, :body, :category_name, :category_id)
+    params.require(:article).permit(:title, :lede, :body, :category_name)
   end
 
-  def set_category_id(article)
-    category_name_from_article = article.category_name
-    category_class_instance_from_categories = Category.find_by(name: category_name_from_article)
-    category_class_instance_from_categories ? category_class_instance_from_categories.id : nil
-  end
 end
