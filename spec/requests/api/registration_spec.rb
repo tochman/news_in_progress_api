@@ -21,7 +21,12 @@ RSpec.describe 'POST /api/auth/' do
     it 'is expected to that users database contains new user' do
       expect(User.all.first.email).to eq 'user@email.com'
     end
+
+    it 'is expected to have the following user name' do
+  expect(User.all.first.name).to eq 'foobar'
+    end
   end
+
 
   describe 'unsuccessful registration' do
     before do
