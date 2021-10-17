@@ -27,7 +27,7 @@ RSpec.describe 'POST /api/auth/' do
     before do
       post '/api/auth/',
            params: {
-             email: 'user@emial.com',
+             email: 'user@email.com',
              name: 'foobar',
              password: 'passsword',
              password_confirmation: 'wrong password',
