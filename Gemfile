@@ -9,6 +9,7 @@ gem 'puma', '~> 5.0'
 gem 'rack-cors', require: 'rack/cors'
 gem 'rails', '~> 6.1.4', '>= 6.1.4.1'
 gem 'simplecov', require: false, group: :test
+gem 'devise_token_auth'
 
 
 group :development, :test do
