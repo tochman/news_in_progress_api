@@ -13,7 +13,6 @@ RSpec.describe Article, type: :model do
     it { is_expected.to validate_presence_of :lede }
     it { is_expected.to validate_presence_of :body }
     it { is_expected.to validate_presence_of :category_name }
-    # it { is_expected.to validate_presence_of :published }
   end
 
   describe 'Associations' do
