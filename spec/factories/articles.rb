@@ -6,5 +6,6 @@ FactoryBot.define do
     category
     category_id { category.id }
     category_name { category.name} 
+    published {true}
   end
 end
