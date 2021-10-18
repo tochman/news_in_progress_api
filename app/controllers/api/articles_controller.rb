@@ -1,7 +1,6 @@
 class Api::ArticlesController < ApplicationController
   def index
-    articles = get_articles(params[:category_name])
-
+    articles = get_published_articles(params[:category_name])
     if articles.any?
       render json: { articles: articles }
     else
@@ -27,11 +26,12 @@ class Api::ArticlesController < ApplicationController
 
   private
 
-  def get_articles(category_name)
+  def get_published_articles(category_name)
+    articles_published = Article.where(published: true)
     if Category.pluck(:name).include? category_name
-      Article.where(category_name: params[:category_name])
+      articles_published.where(category_name: params[:category_name])
     else
-      Article.all
+      articles_published.all
     end
   end
 
