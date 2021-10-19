@@ -1,6 +1,6 @@
 class Api::ArticlesController < ApplicationController
   def index
-    articles = get_published_articles(params[:category_name])
+    articles = Article.get_published_articles(params[:category_name])
     if articles.any?
       render json: { articles: articles }
     else
@@ -25,15 +25,6 @@ class Api::ArticlesController < ApplicationController
   end
 
   private
-
-  def get_published_articles(category_name)
-    articles_published = Article.where(published: true)
-    if Category.pluck(:name).include? category_name
-      articles_published.where(category_name: params[:category_name])
-    else
-      articles_published
-    end
-  end
 
   def article_params
     params.require(:article).permit(:title, :lede, :body, :category_name, :published)
