@@ -63,15 +63,16 @@ RSpec.describe 'GET /api/articles', type: :request do
   end
 
   describe 'when the article is not published' do
-    let!(:article_4) { create(:article, published: false)  }
+    let!(:article_4) { create(:article, published: false) }
+    let!(:article_5) { create(:article) }
     before do
-      get "/api/articles/"
+      get '/api/articles/'
     end
 
-    it { is_expected.to have_http_status 404 }
+    it { is_expected.to have_http_status 200 }
 
     it 'is expected to NOT return an unpublished article' do
-      expect(response_json['message']).to eq "There are no articles in the database"
+      expect(response_json['articles'].count).to eq 1
     end
   end
 end
