@@ -7,7 +7,8 @@ RSpec.describe 'POST /api/articles', type: :request do
            params: { article: { title: 'Amazing title',
                                 lede: 'Amazing lede...',
                                 body: 'Amazing body',
-                                category_name: category.name } }
+                                category_name: category.name,
+                                published: true } }
     end
 
     it { is_expected.to have_http_status 201 }
@@ -25,7 +26,8 @@ RSpec.describe 'POST /api/articles', type: :request do
         post '/api/articles',
              params: { article: { lede: "I'm missing a title",
                                   body: "I'm missing a title",
-                                  category_name: category.name } }
+                                  category_name: category.name,
+                                  published: false } }
       end
 
       it { is_expected.to have_http_status 422 }
@@ -42,7 +44,8 @@ RSpec.describe 'POST /api/articles', type: :request do
         post '/api/articles',
              params: { article: { title: 'I forgot the lede',
                                   body: 'I forgot the lede',
-                                  category_name: category.name } }
+                                  category_name: category.name,
+                                  published: false } }
       end
 
       it { is_expected.to have_http_status 422 }
@@ -59,7 +62,8 @@ RSpec.describe 'POST /api/articles', type: :request do
         post '/api/articles',
              params: { article: { title: 'I forgot the body',
                                   lede: 'I forgot the body',
-                                  category_name: category.name } }
+                                  category_name: category.name,
+                                  published: false } }
       end
 
       it { is_expected.to have_http_status 422 }
@@ -74,7 +78,8 @@ RSpec.describe 'POST /api/articles', type: :request do
         post '/api/articles',
              params: { article: { title: 'I forgot the category',
                                   lede: 'I forgot the category',
-                                  body: 'I forgot the category' } }
+                                  body: 'I forgot the category',
+                                  published: false } }
       end
 
       it { is_expected.to have_http_status 422 }

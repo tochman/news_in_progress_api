@@ -3,9 +3,9 @@ RSpec.describe 'GET /api/articles', type: :request do
 
   describe 'when there are some article in the database' do
     let(:category) { create(:category, name: 'Tech') }
-    let!(:article1) { create(:article, category_id: category.id, category_name: category.name) }
-    let!(:article2) { create(:article, category_id: category.id, category_name: category.name) }
-    let!(:article3) { create(:article) }
+    let!(:article_1) { create(:article, category_id: category.id, category_name: category.name) }
+    let!(:article_2) { create(:article, category_id: category.id, category_name: category.name) }
+    let!(:article_3) { create(:article) }
 
     describe 'searching for all articles' do
       before do
@@ -19,6 +19,10 @@ RSpec.describe 'GET /api/articles', type: :request do
 
       it 'is expected to include a category value' do
         expect(response_json['articles'].last['category_name']).to eq 'MyCategory'
+      end
+
+      it 'is expected to return an article with the published status true' do
+        expect(response_json['articles'].last['published']).to eq true
       end
     end
 
@@ -55,6 +59,20 @@ RSpec.describe 'GET /api/articles', type: :request do
 
     it 'is expected to respond with a negative message when no articles are found' do
       expect(response_json['message']).to eq 'There are no articles in the database'
+    end
+  end
+
+  describe 'when the article is not published' do
+    let!(:article_4) { create(:article, published: false) }
+    let!(:article_5) { create(:article) }
+    before do
+      get '/api/articles/'
+    end
+
+    it { is_expected.to have_http_status 200 }
+
+    it 'is expected to NOT return an unpublished article' do
+      expect(response_json['articles'].count).to eq 1
     end
   end
 end
