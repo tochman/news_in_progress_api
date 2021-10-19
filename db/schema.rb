@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 2021_10_18_095905) do
     t.text "body"
     t.integer "category_id"
     t.string "category_name"
-    t.boolean "published"
+    t.boolean "published", default: false
   end
 
   create_table "categories", force: :cascade do |t|

@@ -31,7 +31,7 @@ class Api::ArticlesController < ApplicationController
     if Category.pluck(:name).include? category_name
       articles_published.where(category_name: params[:category_name])
     else
-      articles_published.all
+      articles_published
     end
   end
 
