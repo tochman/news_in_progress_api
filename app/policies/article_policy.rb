@@ -10,7 +10,7 @@ class ArticlePolicy < ApplicationPolicy
   end
 
   def new?
-    @user.author?
+    @user.journalist?
   end
 
   def create?

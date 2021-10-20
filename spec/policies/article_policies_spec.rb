@@ -11,13 +11,13 @@ describe ArticlePolicy do
   end
 
   describe 'when the user is a journalist' do
-    let(:journalist) { create(:user, role: :journalist) }
+    let(:journalist) { create(:journalist) }
 
     it { is_expected.to permit_actions %i[create show index] }
   end
 
   describe 'when the user is an editor' do
-    let(:editor) { create(:user, role: :editor) }
+    let(:editor) { create(:editor) }
 
     it { is_expected.to permit_actions %i[create show index] }
   end
