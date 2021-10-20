@@ -1,7 +1,12 @@
 FactoryBot.define do
-  factory :users do
+  factory :user do
     email { 'example@email.com' }
-    password { '1234' }
-    role { :editor }
+    password { '123456' }
+    factory  :editor do
+      role { :editor }
+    end
+    factory :subscriber do
+      role { :subscriber }
+    end
   end
 end
