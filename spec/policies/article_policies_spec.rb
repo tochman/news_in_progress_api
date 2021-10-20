@@ -7,19 +7,18 @@ describe ArticlePolicy do
     let(:user) { create(:user) }
 
     it { is_expected.to permit_actions %i[show index] }
-    it { is_expected.to forbid_new_and_create_actions }
+    it { is_expected.to forbid_actions %i[create] }
   end
 
-  describe 'when the user is a subscriber' do
+  describe 'when the user is a journalist' do
     let(:journalist) { create(:user, role: :journalist) }
 
-    it { is_expected.to permit_actions %i[show index] }
-    it { is_expected.to forbid_new_and_create_actions }
+    it { is_expected.to permit_actions %i[create show index] }
   end
 
   describe 'when the user is an editor' do
     let(:editor) { create(:user, role: :editor) }
 
-    it { is_expected.to permit_new_and_create_actions }
+    it { is_expected.to permit_actions %i[create show index] }
   end
 end
