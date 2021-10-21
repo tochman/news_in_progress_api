@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 class ApplicationPolicy
-  attr_reader :user, :article
+  attr_reader :user, :resource
 
-  def initialize(user, article)
+  def initialize(user, resource)
     @user = user
-    @article = article
+    @resource = resource
   end
 
   def index?
@@ -34,20 +34,5 @@ class ApplicationPolicy
 
   def destroy?
     false
-  end
-
-  class Scope
-    def initialize(user, scope)
-      @user = user
-      @scope = scope
-    end
-
-    def resolve
-      scope.all
-    end
-
-    private
-
-    attr_reader :user, :scope
   end
 end

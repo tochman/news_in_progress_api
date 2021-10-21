@@ -7,18 +7,18 @@ describe ArticlePolicy do
     let(:user) { create(:user) }
 
     it { is_expected.to permit_actions %i[show index] }
-    it { is_expected.to forbid_actions %i[create] }
+    it { is_expected.to forbid_actions %i[create update destroy] }
   end
 
   describe 'when the user is a journalist' do
-    let(:journalist) { create(:journalist) }
+    let(:user) { create(:journalist) }
 
-    it { is_expected.to permit_actions %i[create show index] }
+    it { is_expected.to permit_actions %i[create show index destroy] }
   end
 
   describe 'when the user is an editor' do
-    let(:editor) { create(:editor) }
+    let(:user) { create(:editor) }
 
-    it { is_expected.to permit_actions %i[create show index] }
+    it { is_expected.to permit_actions %i[create show index destroy] }
   end
 end

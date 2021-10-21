@@ -1,19 +1,18 @@
 class ArticlePolicy < ApplicationPolicy
-  class Scope < Scope
-    def resolve
-      scope
-    end
-  end
 
   def index?
     true
   end
 
-  def new?
-    @user.journalist?
+  def show?
+    @user
+  end
+  
+  def create?
+     @user.journalist? || @user.editor?
   end
 
-  def create?
-    new?
+  def destroy?
+    create?
   end
 end

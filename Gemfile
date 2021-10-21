@@ -19,6 +19,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'shoulda-matchers'
   gem 'pundit-matchers', '~> 1.7.0'
+  gem 'faker'
 end
 
 group :development do

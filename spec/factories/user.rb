@@ -1,12 +1,15 @@
 FactoryBot.define do
   factory :user do
-    email { 'example@email.com' }
-    password { '123456' }
+    email { Faker::Internet.unique.email }
+    password { 'password' }
     factory  :editor do
       role { :editor }
     end
     factory :subscriber do
       role { :subscriber }
+    end
+    factory :journalist do
+      role { :journalist }
     end
   end
 end
