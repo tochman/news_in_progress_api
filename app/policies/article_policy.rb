@@ -1,5 +1,4 @@
 class ArticlePolicy < ApplicationPolicy
-
   def index?
     true
   end
@@ -7,12 +6,16 @@ class ArticlePolicy < ApplicationPolicy
   def show?
     @user
   end
-  
+
   def create?
-     @user.journalist? || @user.editor?
+    @user.journalist? || @user.editor?
+  end
+
+  def update?
+    @user.editor? || (@user.journalist? && @resource.authors.include?(@user))
   end
 
   def destroy?
-    create?
+    update?
   end
 end

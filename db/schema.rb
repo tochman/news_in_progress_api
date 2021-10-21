@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_19_191535) do
+ActiveRecord::Schema.define(version: 2021_10_21_120935) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,11 @@ ActiveRecord::Schema.define(version: 2021_10_19_191535) do
     t.integer "category_id"
     t.string "category_name"
     t.boolean "published", default: false
+  end
+
+  create_table "articles_authors", id: false, force: :cascade do |t|
+    t.bigint "article_id", null: false
+    t.bigint "author_id", null: false
   end
 
   create_table "categories", force: :cascade do |t|
