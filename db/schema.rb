@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 2021_10_21_120935) do
   create_table "articles_authors", id: false, force: :cascade do |t|
     t.bigint "article_id", null: false
     t.bigint "author_id", null: false
+    t.index ["article_id", "author_id"], name: "index_articles_authors_on_article_id_and_author_id"
   end
 
   create_table "categories", force: :cascade do |t|

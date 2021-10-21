@@ -3,9 +3,9 @@ RSpec.describe Article, type: :model do
     it { is_expected.to have_db_column :title }
     it { is_expected.to have_db_column :lede }
     it { is_expected.to have_db_column :body }
-    it { is_expected.to have_db_column :category_id}
-    it { is_expected.to have_db_column :category_name}
-    it { is_expected.to have_db_column :published}
+    it { is_expected.to have_db_column :category_id }
+    it { is_expected.to have_db_column :category_name }
+    it { is_expected.to have_db_column :published }
   end
 
   describe 'Validations' do
@@ -16,7 +16,11 @@ RSpec.describe Article, type: :model do
   end
 
   describe 'Associations' do
-    it { is_expected.to belong_to :category}
+    it { is_expected.to belong_to :category }
+    it {
+      is_expected.to have_and_belong_to_many(:authors)
+        .class_name('User')
+    }
   end
 
   describe 'Factory' do

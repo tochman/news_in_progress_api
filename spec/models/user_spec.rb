@@ -57,4 +57,17 @@ RSpec.describe User, type: :model do
       it { is_expected.to respond_to :subscriber }
     end
   end
+
+  describe 'associations' do
+    describe 'has many :articles' do
+      subject { user_1 }
+      let(:user_1) { create(:journalist) }
+      let(:user_2) { create(:journalist) }
+      let!(:article) { create(:article, authors: [user_1, user_2]) }
+
+      it do
+        expect(subject.articles.count).to eq 1
+      end
+    end
+  end
 end
