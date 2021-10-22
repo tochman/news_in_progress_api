@@ -1,5 +1,5 @@
 class Api::ArticlesController < ApplicationController
-  before_action
+  before_action :authenticate_user!, only: [:create]
   def index
     articles = Article.get_published_articles(params[:category_name])
     if articles.any?
@@ -10,7 +10,8 @@ class Api::ArticlesController < ApplicationController
   end
 
   def create
-    article = Article.create(article_params)
+    article = authorize Article.create(article_params.merge(author_ids: [current_user.id] + params[:article][:author_ids]))
+    #article = Article.create(article_params)
     article.category_id = Category.find_by(name: article.category_name)&.id
 
     if article.valid?
@@ -28,6 +29,6 @@ class Api::ArticlesController < ApplicationController
   private
 
   def article_params
-    params.require(:article).permit(:title, :lede, :body, :category_name, :published)
+    params.require(:article).permit(:title, :lede, :body, :category_name, :published, author_ids: [])
   end
 end
