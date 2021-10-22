@@ -1,5 +1,8 @@
 RSpec.describe 'POST /api/articles', type: :request do
   subject { response }
+  let(:user) { create(:journalist) }
+  let(:user_2) { create(:user) }
+  let(:credentials) { user.create_new_auth_token }
   let(:category) { create(:category) }
   describe 'successful, when the article is created' do
     before do
@@ -7,8 +10,10 @@ RSpec.describe 'POST /api/articles', type: :request do
            params: { article: { title: 'Amazing title',
                                 lede: 'Amazing lede...',
                                 body: 'Amazing body',
+                                author_ids: [user_2.id],
                                 category_name: category.name,
-                                published: true } }
+                                published: true } },
+           headers: credentials
     end
 
     it { is_expected.to have_http_status 201 }
