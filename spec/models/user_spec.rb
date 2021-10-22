@@ -59,13 +59,14 @@ RSpec.describe User, type: :model do
   end
 
   describe 'associations' do
+    it { is_expected.to have_and_belong_to_many(:articles)}
     describe 'has many :articles' do
       subject { user_1 }
       let(:user_1) { create(:journalist) }
       let(:user_2) { create(:journalist) }
       let!(:article) { create(:article, authors: [user_1, user_2]) }
 
-      it do
+      it 'is expected to include the article in collection' do
         expect(subject.articles.count).to eq 1
       end
     end

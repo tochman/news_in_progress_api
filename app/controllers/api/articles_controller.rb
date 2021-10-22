@@ -1,4 +1,5 @@
 class Api::ArticlesController < ApplicationController
+  before_action
   def index
     articles = Article.get_published_articles(params[:category_name])
     if articles.any?
