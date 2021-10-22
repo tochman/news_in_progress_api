@@ -28,7 +28,8 @@ describe 'GET api/articles/:id', type: :request do
 
   describe 'unsuccessful, when the requested article does not exist in the database' do
     before do
-      get '/api/articles/999'
+      get '/api/articles/999',
+      headers: credentials
     end
 
     it { is_expected.to have_http_status 422 }

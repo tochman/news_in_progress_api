@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
 
   has_and_belongs_to_many :articles, join_table: 'articles_authors', foreign_key: 'author_id'
 
+  validates_presence_of :name, :email, :role
 
 end
  

@@ -1,5 +1,5 @@
 class Api::ArticlesController < ApplicationController
-  before_action :authenticate_user!, only: %i[create]
+  before_action :authenticate_user!, only: %i[create show]
   def index
     articles = Article.get_published_articles(params[:category_name])
     if articles.any?

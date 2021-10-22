@@ -20,7 +20,7 @@ RSpec.describe 'POST /api/articles', type: :request do
     it { is_expected.to have_http_status 401 }
 
     it 'is expected that they cannot create articles' do
-      expect(response_json['errors']).to eq('You are not authorized to perfom that action.')
+      expect(response_json['errors']).to eq('You are not authorized to perform this action')
     end
   end
 
@@ -30,7 +30,7 @@ RSpec.describe 'POST /api/articles', type: :request do
     it { is_expected.to have_http_status 401 }
 
     it 'is expected that they cannot create articles' do
-      expect(response_json['errors']).to eq('You are not authorized to perfom that action.')
+      expect(response_json['errors']).to eq('You are not authorized to perform this action')
     end
   end
 

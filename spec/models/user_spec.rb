@@ -1,5 +1,5 @@
 RSpec.describe User, type: :model do
-  describe 'db table' do
+  describe 'DB table' do
     it {
       is_expected.to have_db_column(:name)
         .of_type(:string)
@@ -11,7 +11,28 @@ RSpec.describe User, type: :model do
     }
   end
 
-  describe 'factory' do
+  describe 'Validations' do
+    it { is_expected.to validate_presence_of :name }
+    it { is_expected.to validate_presence_of :email }
+    it { is_expected.to validate_presence_of :role }
+  end
+  
+  
+  describe 'Associations' do
+    it { is_expected.to have_and_belong_to_many(:articles)}
+
+    describe 'has many :articles' do
+      subject { create(:journalist) }
+      let(:user_2) { create(:journalist) }
+      let!(:article) { create(:article, authors: [subject, user_2]) }
+
+      it 'is expected to include article in collection' do
+        expect(subject.articles).to include article
+      end
+    end
+  end
+
+  describe 'Factory' do
     describe ':user' do
       it {
         expect(create(:user)).to be_valid
@@ -58,17 +79,4 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe 'associations' do
-    it { is_expected.to have_and_belong_to_many(:articles)}
-    describe 'has many :articles' do
-      subject { user_1 }
-      let(:user_1) { create(:journalist) }
-      let(:user_2) { create(:journalist) }
-      let!(:article) { create(:article, authors: [user_1, user_2]) }
-
-      it 'is expected to include the article in collection' do
-        expect(subject.articles.count).to eq 1
-      end
-    end
-  end
 end
