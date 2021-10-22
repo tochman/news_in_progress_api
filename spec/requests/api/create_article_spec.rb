@@ -12,7 +12,7 @@ RSpec.describe 'POST /api/articles', type: :request do
                                 author_ids: [],
                                 category_name: category.name,
                                 published: true } },
-                                headers: credentials
+           headers: credentials
     end
 
     it { is_expected.to have_http_status 201 }
@@ -33,7 +33,7 @@ RSpec.describe 'POST /api/articles', type: :request do
                                   author_ids: [],
                                   category_name: category.name,
                                   published: false } },
-                                  headers: credentials
+             headers: credentials
       end
 
       it { is_expected.to have_http_status 422 }
@@ -53,7 +53,7 @@ RSpec.describe 'POST /api/articles', type: :request do
                                   author_ids: [],
                                   category_name: category.name,
                                   published: false } },
-                                  headers: credentials
+             headers: credentials
       end
 
       it { is_expected.to have_http_status 422 }
@@ -73,7 +73,7 @@ RSpec.describe 'POST /api/articles', type: :request do
                                   author_ids: [],
                                   category_name: category.name,
                                   published: false } },
-                                  headers: credentials
+             headers: credentials
       end
 
       it { is_expected.to have_http_status 422 }
@@ -91,7 +91,7 @@ RSpec.describe 'POST /api/articles', type: :request do
                                   body: 'I forgot the category',
                                   author_ids: [],
                                   published: false } },
-                                  headers: credentials
+             headers: credentials
       end
 
       it { is_expected.to have_http_status 422 }

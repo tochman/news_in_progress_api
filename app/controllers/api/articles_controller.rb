@@ -1,5 +1,5 @@
 class Api::ArticlesController < ApplicationController
-  before_action :authenticate_user!, only: [:create]
+  before_action :authenticate_user!, only: %i[create]
   def index
     articles = Article.get_published_articles(params[:category_name])
     if articles.any?
@@ -11,7 +11,6 @@ class Api::ArticlesController < ApplicationController
 
   def create
     article = authorize Article.create(article_params.merge(author_ids: [current_user.id] + params[:article][:author_ids]))
-    #article = Article.create(article_params)
     article.category_id = Category.find_by(name: article.category_name)&.id
 
     if article.valid?
@@ -22,7 +21,7 @@ class Api::ArticlesController < ApplicationController
   end
 
   def show
-    article = Article.find(params[:id])
+    article = authorize Article.find(params[:id])
     render json: { article: article }
   end
 
