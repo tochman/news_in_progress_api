@@ -55,13 +55,13 @@ describe ArticlePolicy do
       it { is_expected.to_not forbid_actions %i[update destroy] }
     end
 
-    describe 'the user editor and not an author' do
+    describe 'the user is an editor, but not an author' do
       subject { described_class.new(editor_2, article) }
 
       it { is_expected.to permit_actions %i[show index update destroy] }
     end
 
-    describe 'the user editor and an author' do
+    describe 'the user is an editor and an author' do
       subject { described_class.new(editor_1, article) }
 
       it { is_expected.to permit_actions %i[show index update destroy] }

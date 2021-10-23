@@ -23,12 +23,14 @@ RSpec.describe User, type: :model do
 
     describe 'has many :articles' do
       subject { create(:journalist) }
-      let(:user_2) { create(:journalist) }
-      let!(:article) { create(:article, authors: [subject, user_2]) }
+      let!(:article_1) { create(:article, authors: [subject]) }
+      let!(:article_2) { create(:article, authors: [subject]) }
 
       it 'is expected to include article in collection' do
-        expect(subject.articles).to include article
+        expect((subject.articles).count).to eq 2
       end
+
+      
     end
   end
 

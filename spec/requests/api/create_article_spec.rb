@@ -1,11 +1,8 @@
 RSpec.describe 'POST /api/articles', type: :request do
   subject { response }
   let(:user) { create(:journalist) }
-  let(:user_2) { create(:user) }
   let(:credentials) { user.create_new_auth_token }
   let(:category) { create(:category) }
-  let(:user) { create(:journalist) }
-  let(:credentials) { user.create_new_auth_token }
   describe 'successful, when the article is created' do
     before do
       post '/api/articles',
