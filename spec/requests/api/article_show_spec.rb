@@ -29,6 +29,11 @@ describe 'GET api/articles/:id', type: :request do
     it 'is expected to return the author of the article' do
       expect(response_json['article']['authors'].last['name']).to eq journalist.name
     end
+
+    it 'is expected to return the date in a workable format' do
+      expect(response_json['article']['date']).to eq '24/10/21'
+    end
+    
   end
 
   describe 'unsuccessful, when the requested article does not exist in the database' do

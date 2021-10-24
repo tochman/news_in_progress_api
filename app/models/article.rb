@@ -11,4 +11,8 @@ class Article < ApplicationRecord
       articles_published
     end
   end
+
+  def date_published
+    attributes['updated_at'].strftime('%D')
+  end
 end

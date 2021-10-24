@@ -22,7 +22,7 @@ class Api::ArticlesController < ApplicationController
 
   def show
     article = authorize Article.find(params[:id])
-    render json: { article: article }, include: :authors
+    render json: { article: article }, include: [:authors]
   end
 
   private
