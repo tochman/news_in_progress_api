@@ -1,7 +1,8 @@
 class Article < ApplicationRecord
   validates_presence_of :title, :lede, :body, :category_name
   belongs_to :category
-  has_and_belongs_to_many :authors, class_name: 'User', join_table: 'articles_authors', association_foreign_key: 'author_id'
+  has_and_belongs_to_many :authors, class_name: 'User', join_table: 'articles_authors',
+                                    association_foreign_key: 'author_id'
 
   def self.get_published_articles(category_name)
     articles_published = Article.where(published: true)
@@ -10,9 +11,5 @@ class Article < ApplicationRecord
     else
       articles_published
     end
-  end
-
-  def date_published
-    attributes['updated_at'].strftime('%D')
   end
 end
