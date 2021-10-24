@@ -1,10 +1,14 @@
 describe 'GET api/articles/:id', type: :request do
   subject { response }
+  let(:user) { create(:user) }
+  let(:credentials) { user.create_new_auth_token }
 
   describe 'successful, when the requested article exists in the database' do
     let!(:article) { create(:article) }
+
     before do
-      get "/api/articles/#{article.id}"
+      get "/api/articles/#{article.id}",
+          headers: credentials
     end
 
     it { is_expected.to have_http_status 200 }
@@ -24,7 +28,8 @@ describe 'GET api/articles/:id', type: :request do
 
   describe 'unsuccessful, when the requested article does not exist in the database' do
     before do
-      get '/api/articles/999'
+      get '/api/articles/999',
+      headers: credentials
     end
 
     it { is_expected.to have_http_status 422 }

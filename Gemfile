@@ -10,6 +10,7 @@ gem 'rack-cors', require: 'rack/cors'
 gem 'rails', '~> 6.1.4', '>= 6.1.4.1'
 gem 'simplecov', require: false, group: :test
 gem 'devise_token_auth'
+gem 'pundit'
 
 
 group :development, :test do
@@ -17,6 +18,8 @@ group :development, :test do
   gem 'pry-rails'
   gem 'rspec-rails'
   gem 'shoulda-matchers'
+  gem 'pundit-matchers', '~> 1.7.0'
+  gem 'faker'
 end
 
 group :development do

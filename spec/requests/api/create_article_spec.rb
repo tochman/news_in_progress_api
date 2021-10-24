@@ -1,5 +1,7 @@
 RSpec.describe 'POST /api/articles', type: :request do
   subject { response }
+  let(:user) { create(:journalist) }
+  let(:credentials) { user.create_new_auth_token }
   let(:category) { create(:category) }
   describe 'successful, when the article is created' do
     before do
@@ -7,8 +9,10 @@ RSpec.describe 'POST /api/articles', type: :request do
            params: { article: { title: 'Amazing title',
                                 lede: 'Amazing lede...',
                                 body: 'Amazing body',
+                                author_ids: [],
                                 category_name: category.name,
-                                published: true } }
+                                published: true } },
+           headers: credentials
     end
 
     it { is_expected.to have_http_status 201 }
@@ -26,8 +30,10 @@ RSpec.describe 'POST /api/articles', type: :request do
         post '/api/articles',
              params: { article: { lede: "I'm missing a title",
                                   body: "I'm missing a title",
+                                  author_ids: [],
                                   category_name: category.name,
-                                  published: false } }
+                                  published: false } },
+             headers: credentials
       end
 
       it { is_expected.to have_http_status 422 }
@@ -44,8 +50,10 @@ RSpec.describe 'POST /api/articles', type: :request do
         post '/api/articles',
              params: { article: { title: 'I forgot the lede',
                                   body: 'I forgot the lede',
+                                  author_ids: [],
                                   category_name: category.name,
-                                  published: false } }
+                                  published: false } },
+             headers: credentials
       end
 
       it { is_expected.to have_http_status 422 }
@@ -62,8 +70,10 @@ RSpec.describe 'POST /api/articles', type: :request do
         post '/api/articles',
              params: { article: { title: 'I forgot the body',
                                   lede: 'I forgot the body',
+                                  author_ids: [],
                                   category_name: category.name,
-                                  published: false } }
+                                  published: false } },
+             headers: credentials
       end
 
       it { is_expected.to have_http_status 422 }
@@ -79,7 +89,9 @@ RSpec.describe 'POST /api/articles', type: :request do
              params: { article: { title: 'I forgot the category',
                                   lede: 'I forgot the category',
                                   body: 'I forgot the category',
-                                  published: false } }
+                                  author_ids: [],
+                                  published: false } },
+             headers: credentials
       end
 
       it { is_expected.to have_http_status 422 }
