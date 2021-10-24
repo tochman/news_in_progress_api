@@ -27,7 +27,7 @@ describe 'GET api/articles/:id', type: :request do
     end
 
     it 'is expected to return the author of the article' do
-      expect(response_json['articles'].last['authors']).to eq 'Some name'
+      expect(response_json['article']['authors'].last['name']).to eq journalist.name
     end
   end
 
