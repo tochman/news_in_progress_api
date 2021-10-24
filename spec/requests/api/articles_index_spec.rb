@@ -2,10 +2,11 @@ RSpec.describe 'GET /api/articles', type: :request do
   subject { response }
 
   describe 'when there are some article in the database' do
+    let(:journalist) { create(:journalist) }
     let(:category) { create(:category, name: 'Tech') }
     let!(:article_1) { create(:article, category_id: category.id, category_name: category.name) }
     let!(:article_2) { create(:article, category_id: category.id, category_name: category.name) }
-    let!(:article_3) { create(:article) }
+    let!(:article_3) { create(:article, authors: [journalist]) }
 
     describe 'searching for all articles' do
       before do
@@ -23,6 +24,10 @@ RSpec.describe 'GET /api/articles', type: :request do
 
       it 'is expected to return an article with the published status true' do
         expect(response_json['articles'].last['published']).to eq true
+      end
+
+      it 'is expected to return the author of the article' do
+        expect(response_json['articles'].last['authors'].last['name']).to eq journalist.name
       end
     end
 
