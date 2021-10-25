@@ -33,7 +33,6 @@ describe Articles::IndexSerializer, type: :serializer do
           'name' => an_instance_of(String)
         },
         'authors' => an_instance_of(Array)
-        
       }
     )
   end
