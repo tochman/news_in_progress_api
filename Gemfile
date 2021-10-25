@@ -11,6 +11,7 @@ gem 'rails', '~> 6.1.4', '>= 6.1.4.1'
 gem 'simplecov', require: false, group: :test
 gem 'devise_token_auth'
 gem 'pundit'
+gem 'stripe-rails', '~> 2.3', '>= 2.3.2'
 
 
 group :development, :test do
@@ -20,6 +21,7 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'pundit-matchers', '~> 1.7.0'
   gem 'faker'
+  gem 'stripe-ruby-mock', '~> 3.0', '>= 3.0.1'
 end
 
 group :development do
