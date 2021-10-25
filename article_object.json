@@ -1,0 +1,15 @@
+{
+  "id": 64,
+  "title": "MyTitle",
+  "lede": "MyLede",
+  "created_at": "2021-10-25T07:37:08.065Z",
+  "updated_at": "2021-10-25T07:37:08.065Z",
+  "category": { "id": 86, "name": "MyCategory" },
+  "published": true,
+  "authors": [
+    {
+      "id": 85,
+      "name": "Abel Donnelly"
+    }
+  ]
+}

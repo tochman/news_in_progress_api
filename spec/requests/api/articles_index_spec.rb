@@ -15,6 +15,7 @@ RSpec.describe 'GET /api/articles', type: :request do
       it { is_expected.to have_http_status 200 }
 
       it 'is expected to return a collection of articles' do
+        binding.pry
         expect(response_json['articles'].count).to eq 3
       end
 

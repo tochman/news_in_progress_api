@@ -11,7 +11,8 @@ gem 'rails', '~> 6.1.4', '>= 6.1.4.1'
 gem 'simplecov', require: false, group: :test
 gem 'devise_token_auth'
 gem 'pundit'
-
+gem 'jbuilder'
+gem 'active_model_serializers', '~> 0.10.12'
 
 group :development, :test do
   gem 'factory_bot_rails'
