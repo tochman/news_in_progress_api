@@ -11,6 +11,7 @@ describe Articles::IndexSerializer, type: :serializer do
   subject { JSON.parse(serialization.to_json) }
 
   it 'is expected to wrap content in ' do
+    expect(subject.keys).to match ['articles']
   end
   
 end

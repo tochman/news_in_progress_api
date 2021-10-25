@@ -27,6 +27,10 @@ describe Articles::ShowSerializer, type: :serializer do
         'body' => an_instance_of(String),
         'updated_at' => an_instance_of(String),
         'category' => an_instance_of(Hash),
+        'category' => {
+          'id' => an_instance_of(Integer),
+          'name' => an_instance_of(String)
+        },
         'authors' => an_instance_of(Array)
       }
     )
