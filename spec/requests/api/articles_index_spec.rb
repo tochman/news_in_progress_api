@@ -19,7 +19,7 @@ RSpec.describe 'GET /api/articles', type: :request do
       end
 
       it 'is expected to include a category value' do
-        expect(response_json['articles'].last['category_name']).to eq 'MyCategory'
+        expect(response_json['articles'].last['category']['name']).to eq 'MyCategory'
       end
 
       it 'is expected to return an article with the published status true' do

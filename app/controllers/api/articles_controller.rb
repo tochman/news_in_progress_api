@@ -3,7 +3,7 @@ class Api::ArticlesController < ApplicationController
   def index
     articles = Article.get_published_articles(params[:category_name])
     if articles.any?
-      render json: { articles: articles }, include: :authors
+      render json: articles, each_serializer: Articles::IndexSerializer
     else
       render json: { message: 'There are no articles in the database' }, status: 404
     end
@@ -22,7 +22,7 @@ class Api::ArticlesController < ApplicationController
 
   def show
     article = authorize Article.find(params[:id])
-    render json: { article: article }, include: :authors
+    render json: article, serializer: Articles::ShowSerializer
   end
 
   private
