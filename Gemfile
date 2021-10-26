@@ -12,6 +12,8 @@ gem 'simplecov', require: false, group: :test
 gem 'devise_token_auth'
 gem 'pundit'
 gem 'active_model_serializers', '~> 0.10.12'
+gem 'stripe-rails', '~> 2.3', '>= 2.3.2'
+gem 'stripe-ruby-mock', '~> 3.0', '>= 3.0.1'
 
 
 group :development, :test do
