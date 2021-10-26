@@ -69,5 +69,4 @@ describe 'POST /api/subscriptions' do
       expect(response_json['errors']).to eq 'An error occurred while processing the card'
     end
   end
-  
 end
