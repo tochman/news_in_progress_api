@@ -13,7 +13,6 @@ gem 'devise_token_auth'
 gem 'pundit'
 gem 'active_model_serializers', '~> 0.10.12'
 gem 'stripe-rails', '~> 2.3', '>= 2.3.2'
-gem 'stripe-ruby-mock', '~> 3.1.0.rc2', require: 'stripe_mock'
 
 
 group :development, :test do
@@ -23,6 +22,7 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'pundit-matchers', '~> 1.7.0'
   gem 'faker'
+  gem 'stripe-ruby-mock', '~> 3.1.0.rc2', require: 'stripe_mock'
 end
 
 group :development do
