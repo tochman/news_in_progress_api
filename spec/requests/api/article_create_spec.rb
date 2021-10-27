@@ -121,7 +121,6 @@ RSpec.describe 'POST /api/articles', type: :request do
            headers: credentials
     end
     it 'is expected to return an error when attaching image with wrong info' do
-      binding.pry
       expect(response_json['message']).to eq nil
     end
   end
