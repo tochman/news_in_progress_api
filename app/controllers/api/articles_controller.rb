@@ -14,6 +14,7 @@ class Api::ArticlesController < ApplicationController
     article.category_id = Category.find_by(name: article.category_name)&.id
     article.save
     if article.persisted? && attach_image(article)
+      binding.pry
       render json: { message: "You have successfully added #{article.title} to the site" }, status: 201
     else
       render json: { errors: article.errors.full_messages.to_sentence }, status: 422
@@ -34,6 +35,8 @@ class Api::ArticlesController < ApplicationController
   def attach_image(article)
     image_params = params[:article][:image]
     image = decode_base64_string(image_params)
+    return false if image.nil?
+
     decoded_data = Base64.decode64(image[:data])
     io = StringIO.new
     io.puts(decoded_data)

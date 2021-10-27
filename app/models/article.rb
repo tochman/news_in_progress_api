@@ -13,4 +13,6 @@ class Article < ApplicationRecord
       articles_published
     end
   end
+
+  
 end
