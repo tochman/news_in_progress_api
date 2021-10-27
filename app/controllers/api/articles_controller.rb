@@ -10,10 +10,10 @@ class Api::ArticlesController < ApplicationController
   end
 
   def create
-    article = authorize Article.create(article_params.merge(author_ids: [current_user.id] + params[:article][:author_ids]))
+    article = authorize Article.new(article_params.merge(author_ids: [current_user.id] + params[:article][:author_ids]))
     article.category_id = Category.find_by(name: article.category_name)&.id
-
-    if article.valid?
+    article.save
+    if article.persisted? && attach_image(article)
       render json: { message: "You have successfully added #{article.title} to the site" }, status: 201
     else
       render json: { errors: article.errors.full_messages.to_sentence }, status: 422
@@ -29,5 +29,26 @@ class Api::ArticlesController < ApplicationController
 
   def article_params
     params.require(:article).permit(:title, :lede, :body, :category_name, :published, author_ids: [])
+  end
+
+  def attach_image(article)
+    image_params = params[:article][:image]
+    image = decode_base64_string(image_params)
+    decoded_data = Base64.decode64(image[:data])
+    io = StringIO.new
+    io.puts(decoded_data)
+    io.rewind
+    article.image.attach(io: io, filename: "#{article.title}.#{image[:extension]}", content_type: image[:type])
+  end
+
+  def decode_base64_string(image_params)
+    if image_params =~ /^data:(.*?);(.*?),(.*)$/
+      object = {}
+      object[:type] = Regexp.last_match(1)
+      object[:encoder] = Regexp.last_match(2)
+      object[:extension] = Regexp.last_match(1).split('/')[1]
+      object[:data] = Regexp.last_match(3)
+      object
+    end
   end
 end
