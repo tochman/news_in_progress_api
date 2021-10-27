@@ -4,9 +4,8 @@ class Api::SubscriptionsController < ApplicationController
 
   def create
     customer = Stripe::Customer.list(email: current_user.email).data.first
-    customer ||= Stripe::Customer.create(email: current_user.email, source: params[:stripeToken],
-                                         currency: params[:currency], amount: params[:amount])
-    Stripe::Charge.create(customer: customer.id, currency: customer.currency, amount: customer.amount.to_i)
+    customer ||= Stripe::Customer.create(email: current_user.email, source: params[:stripeToken])
+    Stripe::Charge.create(customer: customer.id, currency: params[:currency], amount: params[:amount].to_i)
 
     current_user.subscriber!
     render json: { message: 'You have successfully subscribed.' }, status: 201
