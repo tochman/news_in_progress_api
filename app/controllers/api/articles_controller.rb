@@ -14,7 +14,6 @@ class Api::ArticlesController < ApplicationController
     article.category_id = Category.find_by(name: article.category_name)&.id
     article.save
     if article.persisted? && attach_image(article)
-      binding.pry
       render json: { message: "You have successfully added #{article.title} to the site" }, status: 201
     else
       render json: { errors: article.errors.full_messages.to_sentence }, status: 422
