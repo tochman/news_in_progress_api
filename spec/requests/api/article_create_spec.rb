@@ -11,11 +11,17 @@ RSpec.describe 'POST /api/articles', type: :request do
                                 body: 'Amazing body',
                                 author_ids: [],
                                 category_name: category.name,
+                                image: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAeAAAAGSCAMAAAAM4OJtAAAABGdBTUEAALGPC',
                                 published: true } },
            headers: credentials
     end
 
     it { is_expected.to have_http_status 201 }
+
+    it 'is expected to attach an image to the new article' do
+      article = Article.last
+      expect(article.image).to be_attached
+    end
 
     it 'is expected to return a response message' do
       expect(response_json['message']).to eq(
