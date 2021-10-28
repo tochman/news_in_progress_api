@@ -12,6 +12,7 @@ gem 'simplecov', require: false, group: :test
 gem 'devise_token_auth'
 gem 'pundit'
 gem 'active_model_serializers', '~> 0.10.12'
+gem "aws-sdk-s3", require: false
 
 
 group :development, :test do
