@@ -108,7 +108,7 @@ RSpec.describe 'POST /api/articles', type: :request do
     end
   end
 
-  describe 'Unsuccessfull image to article attachment' do
+  describe 'successful, when an article without image is created' do
     before do
       post '/api/articles',
            params: { article: { title: 'Amazing title',
@@ -116,12 +116,13 @@ RSpec.describe 'POST /api/articles', type: :request do
                                 body: 'Amazing body',
                                 author_ids: [],
                                 category_name: category.name,
-                                image: 'data:image/png:base64,iVBORw0KGgoAAAANSUhEUgAAAeAAAAGSCAMAAAAM4OJtAAAABGdBTUEAALGPC',
+                                # image: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAeAAAAGSCAMAAAAM4OJtAAAABGdBTUEAALGPC',
                                 published: true } },
            headers: credentials
     end
-    it 'is expected to return an error when attaching image with wrong info' do
-      expect(response_json['message']).to eq nil
+
+    it 'is expected to return a successful response message when image is not passed in' do
+      expect(response_json['message']).to eq 'You have successfully added Amazing title to the site'
     end
   end
 end

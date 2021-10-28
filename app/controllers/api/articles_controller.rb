@@ -28,17 +28,19 @@ class Api::ArticlesController < ApplicationController
   private
 
   def article_params
-    params.require(:article).permit(:title, :lede, :body, :category_name, :published, author_ids: [])
+    params.require(:article).permit(:title, :lede, :body, :category_name, :published, keys: [:image], author_ids: [])
   end
 
   def attach_image(article)
     image_params = params[:article][:image]
     image = decode_base64_string(image_params)
-    return false if image.nil?
-
-    decoded_data = Base64.decode64(image[:data])
+    begin
+      decoded_data = Base64.decode64(image[:data])
+    rescue StandardError => e
+      return err = { errors: 'not a valid image' }, status: 400
+    end
     io = StringIO.new
-    io.puts(decoded_data)
+    io << decoded_data
     io.rewind
     article.image.attach(io: io, filename: "#{article.title}.#{image[:extension]}", content_type: image[:type])
   end
