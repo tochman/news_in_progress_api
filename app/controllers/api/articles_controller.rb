@@ -16,7 +16,8 @@ class Api::ArticlesController < ApplicationController
     if article.persisted? && attach_image(article)
       render json: { message: "You have successfully added #{article.title} to the site" }, status: 201
     else
-      render json: { errors: article.errors.full_messages.to_sentence }, status: 422
+      error_message = params[:article][:image] ? 'The image you uploaded could not be processed' : article.errors.full_messages.to_sentence
+      render json: { errors: error_message }, status: 422
     end
   end
 
@@ -33,12 +34,12 @@ class Api::ArticlesController < ApplicationController
 
   def attach_image(article)
     image_params = params[:article][:image]
+    return true unless image_params
+
     image = decode_base64_string(image_params)
-    begin
-      decoded_data = Base64.decode64(image[:data])
-    rescue StandardError => e
-      return err = { errors: 'not a valid image' }, status: 400
-    end
+    return false if image.nil?
+
+    decoded_data = Base64.decode64(image[:data])
     io = StringIO.new
     io << decoded_data
     io.rewind

@@ -116,13 +116,30 @@ RSpec.describe 'POST /api/articles', type: :request do
                                 body: 'Amazing body',
                                 author_ids: [],
                                 category_name: category.name,
-                                # image: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAeAAAAGSCAMAAAAM4OJtAAAABGdBTUEAALGPC',
                                 published: true } },
            headers: credentials
     end
 
     it 'is expected to return a successful response message when image is not passed in' do
       expect(response_json['message']).to eq 'You have successfully added Amazing title to the site'
+    end
+  end
+
+  describe 'unsuccessful, when the API is unable to process the image' do
+    before do
+      post '/api/articles',
+           params: { article: { title: 'Amazing title',
+                                lede: 'Amazing lede...',
+                                body: 'Amazing body',
+                                author_ids: [],
+                                category_name: category.name,
+                                image: 'useless nonsense',
+                                published: true } },
+           headers: credentials
+    end
+
+    it 'is expected to return an error message when an image that cannot be processed is passed in' do
+      expect(response_json['errors']).to eq 'The image you uploaded could not be processed'
     end
   end
 end
