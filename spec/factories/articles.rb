@@ -5,7 +5,12 @@ FactoryBot.define do
     body { 'MyBody' }
     category
     category_id { category.id }
-    category_name { category.name} 
-    published {true}
+    category_name { category.name }
+    published { true }
+
+    after(:build) do |article|
+      article.image.attach(io: File.open(Rails.root.join('spec', 'fixtures', 'images', 'placeholder.png')),
+                           filename: 'placeholder.png', content_type: 'image/png')
+    end
   end
 end

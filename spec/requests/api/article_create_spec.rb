@@ -125,7 +125,6 @@ RSpec.describe 'POST /api/articles', type: :request do
     end
 
     it 'is expected to return a successful response message when image is not passed in' do
-      binding.pry
       expect(response_json['errors']).to eq "Image can't be blank"
     end
   end
@@ -144,7 +143,7 @@ RSpec.describe 'POST /api/articles', type: :request do
     end
 
     it 'is expected to return an error message when an image that cannot be processed is passed in' do
-      expect(response_json['errors']).to eq 'The image you uploaded could not be processed'
+      expect(response_json['errors']).to eq "Image can't be blank"
     end
   end
 end

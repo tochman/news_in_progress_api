@@ -11,8 +11,9 @@ class Api::ArticlesController < ApplicationController
 
   def create
     article = authorize Article.new(article_params.merge(author_ids: [current_user.id] + params[:article][:author_ids]))
-    article.category_id = Category.find_by(name: article.category_name)&.id
-    attach_image(article)
+
+    article.category = Category.find_by(name: article.category_name)
+    Article.attach_image(article, params)
     article.save
 
     if article.persisted?
@@ -31,28 +32,5 @@ class Api::ArticlesController < ApplicationController
 
   def article_params
     params.require(:article).permit(:title, :lede, :body, :category_name, :published, author_ids: [])
-  end
-
-  def attach_image(article)
-    image_params = params[:article][:image]
-    image = decode_base64_string(image_params)
-    if image
-      decoded_data = Base64.decode64(image[:data])
-      io = StringIO.new
-      io << decoded_data
-      io.rewind
-      article.image.attach(io: io, filename: "#{article.title}.#{image[:extension]}", content_type: image[:type])
-    end
-  end
-
-  def decode_base64_string(image_params)
-    if image_params =~ /^data:(.*?);(.*?),(.*)$/
-      object = {}
-      object[:type] = Regexp.last_match(1)
-      object[:encoder] = Regexp.last_match(2)
-      object[:extension] = Regexp.last_match(1).split('/')[1]
-      object[:data] = Regexp.last_match(3)
-      object
-    end
   end
 end
