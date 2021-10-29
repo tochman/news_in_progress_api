@@ -1,3 +1,4 @@
-User.find_or_create_by(name: 'Roger Harrabin', email: 'roger@nip.com', role: 2)
-User.find_or_create_by(name: 'Emily Anthes', email: 'emily@nip.com', role: 2)
-User.find_or_create_by(name: 'Becky Waterton', email: 'becky@nip.com', role: 2)
+User.create(name: 'Roger Harrabin', email: 'roger@nip.com', role: 2, password: "password", password_confirmation: "password")
+User.create(name: 'Emily Anthes', email: 'emily@nip.com', role: 2, password: "password", password_confirmation: "password")
+User.create(name: 'Becky Waterton', email: 'becky@nip.com', role: 2, password: "password", password_confirmation: "password")
+User.create(name: 'Pascale Hughes', email: 'pascale@nip.com', role: 2, password: "password", password_confirmation: "password")
