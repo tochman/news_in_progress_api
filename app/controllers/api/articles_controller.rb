@@ -12,12 +12,13 @@ class Api::ArticlesController < ApplicationController
   def create
     article = authorize Article.new(article_params.merge(author_ids: [current_user.id] + params[:article][:author_ids]))
     article.category_id = Category.find_by(name: article.category_name)&.id
+    attach_image(article)
     article.save
-    if article.persisted? && attach_image(article)
+
+    if article.persisted?
       render json: { message: "You have successfully added #{article.title} to the site" }, status: 201
     else
-      error_message = params[:article][:image] ? 'The image you uploaded could not be processed' : article.errors.full_messages.to_sentence
-      render json: { errors: error_message }, status: 422
+      render json: { errors: article.errors.full_messages.to_sentence }, status: 422
     end
   end
 
@@ -34,16 +35,14 @@ class Api::ArticlesController < ApplicationController
 
   def attach_image(article)
     image_params = params[:article][:image]
-    return true unless image_params
-
     image = decode_base64_string(image_params)
-    return false if image.nil?
-
-    decoded_data = Base64.decode64(image[:data])
-    io = StringIO.new
-    io << decoded_data
-    io.rewind
-    article.image.attach(io: io, filename: "#{article.title}.#{image[:extension]}", content_type: image[:type])
+    if image
+      decoded_data = Base64.decode64(image[:data])
+      io = StringIO.new
+      io << decoded_data
+      io.rewind
+      article.image.attach(io: io, filename: "#{article.title}.#{image[:extension]}", content_type: image[:type])
+    end
   end
 
   def decode_base64_string(image_params)

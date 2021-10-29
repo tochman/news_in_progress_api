@@ -38,6 +38,7 @@ RSpec.describe 'POST /api/articles', type: :request do
                                   body: "I'm missing a title",
                                   author_ids: [],
                                   category_name: category.name,
+                                  image: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAeAAAAGSCAMAAAAM4OJtAAAABGdBTUEAALGPC',
                                   published: false } },
              headers: credentials
       end
@@ -58,6 +59,7 @@ RSpec.describe 'POST /api/articles', type: :request do
                                   body: 'I forgot the lede',
                                   author_ids: [],
                                   category_name: category.name,
+                                  image: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAeAAAAGSCAMAAAAM4OJtAAAABGdBTUEAALGPC',
                                   published: false } },
              headers: credentials
       end
@@ -78,6 +80,7 @@ RSpec.describe 'POST /api/articles', type: :request do
                                   lede: 'I forgot the body',
                                   author_ids: [],
                                   category_name: category.name,
+                                  image: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAeAAAAGSCAMAAAAM4OJtAAAABGdBTUEAALGPC',
                                   published: false } },
              headers: credentials
       end
@@ -95,6 +98,7 @@ RSpec.describe 'POST /api/articles', type: :request do
              params: { article: { title: 'I forgot the category',
                                   lede: 'I forgot the category',
                                   body: 'I forgot the category',
+                                  image: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAeAAAAGSCAMAAAAM4OJtAAAABGdBTUEAALGPC',
                                   author_ids: [],
                                   published: false } },
              headers: credentials
@@ -108,7 +112,7 @@ RSpec.describe 'POST /api/articles', type: :request do
     end
   end
 
-  describe 'successful, when an article without image is created' do
+  describe 'Unsuccessful, when an article without image passed in' do
     before do
       post '/api/articles',
            params: { article: { title: 'Amazing title',
@@ -121,7 +125,8 @@ RSpec.describe 'POST /api/articles', type: :request do
     end
 
     it 'is expected to return a successful response message when image is not passed in' do
-      expect(response_json['message']).to eq 'You have successfully added Amazing title to the site'
+      binding.pry
+      expect(response_json['errors']).to eq "Image can't be blank"
     end
   end
 
