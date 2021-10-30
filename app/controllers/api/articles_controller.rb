@@ -10,10 +10,13 @@ class Api::ArticlesController < ApplicationController
   end
 
   def create
-    article = authorize Article.create(article_params.merge(author_ids: [current_user.id] + params[:article][:author_ids]))
-    article.category_id = Category.find_by(name: article.category_name)&.id
+    article = authorize Article.new(article_params.merge(author_ids: [current_user.id] + params[:article][:author_ids]))
 
-    if article.valid?
+    article.category = Category.find_by(name: article.category_name)
+    Article.attach_image(article, params)
+    article.save
+
+    if article.persisted?
       render json: { message: "You have successfully added #{article.title} to the site" }, status: 201
     else
       render json: { errors: article.errors.full_messages.to_sentence }, status: 422

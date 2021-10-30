@@ -1,0 +1,5 @@
+{
+  "solargraph.commandPath": "/Users/admin/.rvm/gems/ruby-2.5.1/bin/solargraph",
+  "solargraph.formatting": true,
+  "solargraph.diagnostics": true
+}
